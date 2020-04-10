@@ -4,7 +4,11 @@
   "workspaces": [
     "packages/**"
   ],
+  "scripts": {
+    "dev": "yarn workspace @opentabletop/portal dev"
+  },
   "devDependencies": {
+    "hasura-cli": "1.1.1",
     "husky": "4.2.5",
     "prettier": "2.0.4",
     "pretty-quick": "2.0.1"
