@@ -1,0 +1,14 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - name
+      - user_id
+      computed_fields: []
+      filter: {}
+      limit: null
+    role: user
+    table:
+      name: profile
+      schema: public
+  type: create_select_permission
