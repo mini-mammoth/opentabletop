@@ -1,8 +1,10 @@
 import React from 'react'
 import useSWR from 'swr'
+
+import Layout from '../components/Layout'
+import Profiles from '../components/Profiles'
 import { withApollo } from '../lib/apollo'
 import fetcher from '../utils/fetcher'
-import Profiles from '../components/Profiles'
 
 function UserData({ data }) {
   return (
@@ -21,7 +23,7 @@ function Index() {
   const isSignedIn = data && data.name
 
   return (
-    <>
+    <Layout>
       <h1>Open Table Top</h1>
       <Profiles/>
 
@@ -33,7 +35,7 @@ function Index() {
       ) : (
         <a href="/api/sso/login">Login</a>
       )}
-    </>
+    </Layout>
   )
 }
 
