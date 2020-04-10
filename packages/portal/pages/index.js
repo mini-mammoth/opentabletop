@@ -1,13 +1,15 @@
 import React from 'react'
 import useSWR from 'swr'
+import { withApollo } from '../lib/apollo'
 import fetcher from '../utils/fetcher'
+import Profiles from '../components/Profiles'
 
 function UserData({ data }) {
   return (
     <ul>
       {Object.entries(data).map(([k, v]) => (
         <li key={k}>
-          <b>{k}</b>: {typeof v === 'object' ? <UserData data={v} /> : v}
+          <b>{k}</b>: {typeof v === 'object' ? <UserData data={v}/> : v}
         </li>
       ))}
     </ul>
@@ -21,9 +23,11 @@ function Index() {
   return (
     <>
       <h1>Open Table Top</h1>
+      <Profiles/>
+
       {isSignedIn ? (
         <>
-          <UserData data={data} />
+          <UserData data={data}/>
           <a href="/api/sso/logout">Logout</a>
         </>
       ) : (
@@ -33,4 +37,4 @@ function Index() {
   )
 }
 
-export default Index
+export default withApollo()(Index)

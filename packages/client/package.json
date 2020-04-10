@@ -4,6 +4,10 @@
   "license": "GPL-3.0-or-later",
   "main": "index.js",
   "dependencies": {
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link-http": "^1.5.17",
+    "graphql": "14",
     "isomorphic-fetch": "^2.2.1"
   }
 }
