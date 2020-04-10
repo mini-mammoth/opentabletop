@@ -7,7 +7,7 @@ export default initAuth0({
   domain: serverRuntimeConfig.auth0Domain,
   clientId: serverRuntimeConfig.auth0ClientId,
   clientSecret: serverRuntimeConfig.auth0ClientSecret,
-  scope: 'openid profile',
+  scope: 'openid profile email',
   redirectUri: `${publicRuntimeConfig.endpoint}/api/sso/callback`,
   postLogoutRedirectUri: publicRuntimeConfig.endpoint,
   session: {
