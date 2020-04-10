@@ -1,32 +1,18 @@
 version: '3.6'
 services:
-
-  postgres:
-    image: postgres:12
-    restart: always
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: postgrespassword
-
-  graphql-engine:
-    image: hasura/graphql-engine:v1.1.1
+  couchdb:
+    image: couchdb:3
     ports:
-      - "8080:8080"
-    depends_on:
-      - "postgres"
-    restart: always
+      - 5984:5984
+      - 4369:4369
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-      # This has to kept false otherwise changes are not recorded to migrations folder.
-      # Use `yarn harusa console` to access the database console.
-      # See: https://hasura.io/docs/1.0/graphql/manual/migrations/new-database.html#migrations-new-db
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
-      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      ## uncomment next line to set an admin secret
-      HASURA_GRAPHQL_ADMIN_SECRET: brucewayne-is-batman
-      HASURA_GRAPHQL_JWT_SECRET: '{"type": "RS256", "jwk_url": "https://opentabletop.eu.auth0.com/.well-known/jwks.json"}'
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: password
+    volumes:
+      - db_data:/opt/couchdb/data
+      - db_config:/opt/couchdb/etc/local.d
 
 volumes:
   db_data:
+  db_config:
 
