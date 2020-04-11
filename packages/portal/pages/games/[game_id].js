@@ -1,20 +1,20 @@
-import PouchDB from 'pouchdb'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
+import React from 'react'
 
-function Game({ game_id }) {
-  const [info, setInfo] = useState('')
+import Layout from '../../components/Layout'
+import PouchDBProvider from '../../utils/PouchDBContext'
 
-  useEffect(() => {
-    const db = new PouchDB(`/api/games/${game_id}`, {
-      live: true,
-    })
+function Game() {
+  const router = useRouter()
+  const { game_id } = router.query
 
-    db.info().then(function(info) {
-      setInfo(info)
-    })
-  }, [])
-
-  return <div>{JSON.stringify(info)}</div>
+  return (
+    <Layout>
+      <PouchDBProvider remoteUrl={game_id && `/api/games/${game_id}`}>
+        <div>Game Screen</div>
+      </PouchDBProvider>
+    </Layout>
+  )
 }
 
 export default Game
