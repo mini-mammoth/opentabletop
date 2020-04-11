@@ -21,7 +21,7 @@ const useStyles = makeStyles(
   { name: 'Header' },
 )
 
-function Header() {
+function Header({ title }) {
   const classes = useStyles()
 
   return (
@@ -29,13 +29,17 @@ function Header() {
       <Toolbar>
         <Container className={classes.container}>
           <Typography variant="h6" className={classes.title}>
-            Open Table Top
+            {title}
           </Typography>
           <Button color="inherit">Login</Button>
         </Container>
       </Toolbar>
     </AppBar>
   )
+}
+
+Header.defaultProps = {
+  title: 'Open Table Top',
 }
 
 export default Header

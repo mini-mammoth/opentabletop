@@ -26,7 +26,7 @@ function NewGame() {
   }
 
   return (
-    <Layout>
+    <Layout title="New Game">
       <h1>Create new Game</h1>
       <TextField label="Name" required value={name} onChange={nameChange} />
       {error && <FormHelperText error>{error.toString()}</FormHelperText>}

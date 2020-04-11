@@ -9,7 +9,7 @@ function Game() {
   const { game_id } = router.query
 
   return (
-    <Layout>
+    <Layout title="Game">
       <PouchDBProvider remoteUrl={game_id && `/api/games/${game_id}`}>
         <div>Game Screen</div>
       </PouchDBProvider>
