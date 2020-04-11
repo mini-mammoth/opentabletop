@@ -1,44 +1,30 @@
-import fetch from 'isomorphic-fetch'
-
-const UPSERT_PROFILE = `
-mutation upsert_profile ($user: profile_insert_input!) {
-  insert_profile(
-    objects: [
-      $user
-    ],
-    on_conflict: {
-      constraint: profile_pkey
-      update_columns: [email, name]
-    }
-  ) {
-    affected_rows
-  }
-}
-`
+import nano from 'nano'
 
 /**
  * Inserts or updates a users profile.
  * @param user
  * @param endpoint {string} - harusa endpoint
  * @param token {string} - bearer token
- * @return {Promise<void>}
+ * @return {Promise<nano.DocumentInsertResponse>}
  */
-async function upsertProfile(user, { endpoint, token }) {
-  const apiRes = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      query: UPSERT_PROFILE,
-      variables: { user },
-    }),
-  })
+async function upsertProfile(user, { endpoint }) {
+  const master = nano(endpoint).use('master')
 
-  if (!apiRes.ok) {
-    console.error(`could not upsert user: ${user}`)
-    console.log(await apiRes.text())
+  let existingUser = {}
+  try {
+    existingUser = await master.get(user._id)
+  } catch (err) {
+    if (err.reason === 'missing') {
+      existingUser = {}
+    } else {
+      throw err
+    }
   }
+
+  return await master.insert({
+    ...existingUser,
+    ...user,
+  })
 }
 
 export default upsertProfile

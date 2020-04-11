@@ -4,6 +4,8 @@
   "license": "GPL-3.0-or-later",
   "main": "index.js",
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "nano": "^8.2.2",
+    "shortid": "^2.2.15"
   }
 }

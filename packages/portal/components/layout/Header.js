@@ -4,8 +4,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
-import useSWR from 'swr'
-import fetcher from '../../utils/fetcher'
 
 const useStyles = makeStyles(
   (theme) => ({
