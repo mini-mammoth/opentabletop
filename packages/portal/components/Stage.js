@@ -1,6 +1,6 @@
 import { Stage as PixiStage } from '@inlet/react-pixi'
 import { makeStyles } from '@material-ui/core/styles'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useMeasure } from 'react-use'
 import Controls from './stage/Controls'
 
@@ -27,8 +27,6 @@ const stageOptions = {
   resolution: window.devicePixelRatio,
 }
 
-let app
-
 function Stage() {
   if (!window) {
     return <div>{'This component only works in the browser'}</div>
@@ -36,9 +34,10 @@ function Stage() {
 
   const { root, stage } = useStyles()
   const [ref, { width, height }] = useMeasure()
+  const app = useRef(null)
 
   useEffect(() => {
-    app?.renderer.resize(width, height)
+    app.current?.renderer.resize(width, height)
   }, [width, height])
 
   return (
@@ -46,7 +45,7 @@ function Stage() {
       <PixiStage
         className={stage}
         options={stageOptions}
-        onMount={(newApp) => (app = newApp)}
+        onMount={(newApp) => (app.current = newApp)}
       >
         <Controls x={30} y={30} />
       </PixiStage>
