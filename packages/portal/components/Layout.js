@@ -1,4 +1,3 @@
-import Container from '@material-ui/core/Container'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Head from 'next/head'
 import React from 'react'
@@ -26,8 +25,8 @@ function Layout({ title, children }) {
       <Head>
         <title>{title} - Open Table Top</title>
       </Head>
-      <Header title={title} />
-      <Container className={classes.container}>{children}</Container>
+      <Header title={title}/>
+      <div className={classes.container}>{children}</div>
     </div>
   )
 }

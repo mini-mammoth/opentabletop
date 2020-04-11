@@ -2,7 +2,10 @@ import { Stage as PixiStage } from '@inlet/react-pixi'
 import { makeStyles } from '@material-ui/core/styles'
 import React, { useEffect, useRef } from 'react'
 import { useMeasure } from 'react-use'
+import { parseHex } from '../utils/parser'
 import Controls from './stage/Controls'
+import GameBoard from './stage/GameBoard'
+import ViewContainer from './stage/ViewContainer'
 
 const useStyles = makeStyles(
   () => ({
@@ -23,7 +26,7 @@ const useStyles = makeStyles(
 )
 
 const stageOptions = {
-  backgroundColor: 0x1099bb,
+  backgroundColor: parseHex('#1099bb'),
   resolution: window.devicePixelRatio,
 }
 
@@ -47,7 +50,10 @@ function Stage() {
         options={stageOptions}
         onMount={(newApp) => (app.current = newApp)}
       >
-        <Controls x={30} y={30} />
+        <ViewContainer>
+          <GameBoard/>
+        </ViewContainer>
+        <Controls x={30} y={30}/>
       </PixiStage>
     </div>
   )
