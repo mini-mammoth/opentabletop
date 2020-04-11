@@ -7,7 +7,7 @@ import ChatLog from '../../components/ChatLog'
 import Layout from '../../components/Layout'
 import PouchDBProvider from '../../utils/PouchDBContext'
 
-const Map = dynamic(() => import('../../components/Map'), {
+const Map = dynamic(() => import('../../components/Stage'), {
   ssr: false,
 })
 
@@ -15,10 +15,8 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
   },
 }))
-
 
 function Game() {
   const router = useRouter()
@@ -29,7 +27,7 @@ function Game() {
     <Layout title="Game">
       <PouchDBProvider remoteUrl={game_id && `/api/games/${game_id}`}>
         <div className={root}>
-          <Map/>
+          <Map />
         </div>
         <ChatLog/>
       </PouchDBProvider>
