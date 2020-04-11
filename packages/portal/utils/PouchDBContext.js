@@ -19,9 +19,17 @@ export default function PouchDBProvider({ children, remoteUrl }) {
       return
     }
 
+    if (remoteUrl[0] === '/') {
+      remoteUrl = `${window.location.origin}${remoteUrl}`
+    }
+
     const db = new PouchDB(remoteUrl, {
       live: true,
     })
+
+    if (window) {
+      window.ACTIVE_DB = db
+    }
 
     setDB(db)
 
