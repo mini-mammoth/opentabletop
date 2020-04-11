@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import React from 'react'
+import ChatLog from '../../components/ChatLog'
 
 import Layout from '../../components/Layout'
 import PouchDBProvider from '../../utils/PouchDBContext'
@@ -12,6 +13,7 @@ function Game() {
     <Layout title="Game">
       <PouchDBProvider remoteUrl={game_id && `/api/games/${game_id}`}>
         <div>Game Screen</div>
+        <ChatLog/>
       </PouchDBProvider>
     </Layout>
   )
