@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React from 'react'
-import ChatLog from '../../components/ChatLog'
 
 import Layout from '../../components/Layout'
 import PouchDBProvider from '../../utils/PouchDBContext'
@@ -16,6 +15,7 @@ const useStyles = makeStyles(
     root: {
       display: 'flex',
       flexDirection: 'column',
+      width: '100%',
     },
   }),
   { name: 'Game' },
@@ -32,7 +32,6 @@ function Game() {
         <div className={root}>
           <Stage />
         </div>
-        <ChatLog/>
       </PouchDBProvider>
     </Layout>
   )

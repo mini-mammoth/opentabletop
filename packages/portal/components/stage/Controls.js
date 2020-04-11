@@ -1,4 +1,5 @@
 import { Container, Text } from '@inlet/react-pixi'
+import Router from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 function Controls(props) {
@@ -16,6 +17,13 @@ function Controls(props) {
         text={text}
         interactive={true}
         pointerdown={() => setCounter(counter + 1)}
+      />
+
+      <Text
+        y={50}
+        text={'Show to chat'}
+        interactive={true}
+        pointerdown={() => Router.push(`${Router.router.asPath}chat`)}
       />
     </Container>
   )
