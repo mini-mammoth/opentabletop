@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { usePouchDB } from '../utils/PouchDBContext'
+import { throwIfError } from './utils'
 
 /**
  * @typedef ChatMessage
@@ -9,7 +10,6 @@ import { usePouchDB } from '../utils/PouchDBContext'
  * @property message {string} -
  * @property timestamp {number} -
  */
-
 
 /**
  * Hook to use the chat.
@@ -28,9 +28,21 @@ export default function useChat() {
       return
     }
 
+    // Get chat history
+    db.find({
+      selector: { type: 'Chat'  },
+    })
+      .then(throwIfError)
+      .then((lastMessages) => {
+        setMessages((msgs) => [...lastMessages.docs, ...msgs])
+      })
+      .catch(console.error)
+
+    // Receive live updates
     const changes = db
       .changes({
         live: true,
+        since: 'now',
         include_docs: true,
         filter: (doc) => doc.type === 'Chat',
       })

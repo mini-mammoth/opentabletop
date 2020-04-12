@@ -34,6 +34,7 @@ export default auth0.requireAuthentication(async function api(req, res) {
           headers: {
             'X-Auth-CouchDB-UserName': user.sub,
             'X-Auth-CouchDB-Roles': 'user',
+            'Content-Type': 'application/json'
           },
           method: req.method,
         },
