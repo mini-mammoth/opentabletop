@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { usePouchDB } from '../utils/PouchDBContext'
+import { throwIfError } from './utils'
 
 /**
  * @typedef ChatMessage
@@ -9,7 +10,6 @@ import { usePouchDB } from '../utils/PouchDBContext'
  * @property message {string} -
  * @property timestamp {number} -
  */
-
 
 /**
  * Hook to use the chat.
@@ -28,9 +28,25 @@ export default function useChat() {
       return
     }
 
+    // Get chat history
+    db.allDocs({
+      startkey: 'urn:ott:chat:\ufff0',
+      include_docs: true,
+      descending: true,
+      limit: 20,
+    })
+      .then(throwIfError)
+      .then((res) => {
+        const hist = res.rows.map((row) => row.doc).reverse()
+        setMessages((msgs) => [...hist, ...msgs])
+      })
+      .catch(console.error)
+
+    // Receive live updates
     const changes = db
       .changes({
         live: true,
+        since: 'now',
         include_docs: true,
         filter: (doc) => doc.type === 'Chat',
       })
@@ -41,14 +57,20 @@ export default function useChat() {
   }, [db])
 
   const sendMessage = useCallback(
-    (text) => {
+    (msg) => {
       if (!db) return
+
+      if (typeof msg === 'string') {
+        msg = {
+          message: msg,
+        }
+      }
 
       const timestamp = Date.now()
       const message = {
+        ...msg,
         _id: `urn:ott:chat:${timestamp}`,
         type: 'Chat',
-        message: text,
         timestamp,
       }
 

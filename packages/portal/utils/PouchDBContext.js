@@ -1,8 +1,11 @@
 import PouchDB from 'pouchdb'
+import PouchDBFind from 'pouchdb-find'
 import React, { useContext, useEffect, useState } from 'react'
 
 const PouchDBContext = React.createContext(null)
 PouchDBContext.displayName = 'pouchdb Context'
+
+PouchDB.plugin(PouchDBFind)
 
 /**
  * Provides a PouchDB instance for all children.

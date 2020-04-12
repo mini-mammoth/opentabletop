@@ -1,13 +1,15 @@
 import { TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
+import Grow from '@material-ui/core/Grow'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
+
 import useChat from '../client/useChat'
+import { detectMacro } from '../rules/macros'
+import ChatMessage from './chatLog/ChatMessage'
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -33,25 +35,56 @@ const useStyles = makeStyles(
 function ChatLog({ className: classNameProp }) {
   const [messages, sendMessage] = useChat()
   const [text, setText] = useState('')
+  const [macro, setMacro] = useState(undefined)
   const classes = useStyles()
+
+  useEffect(() => {
+    const macro = detectMacro(text)
+
+    setMacro(macro)
+  }, [text, setMacro])
+
+  async function send() {
+    if (!text) {
+      return
+    }
+
+    await sendMessage(text)
+    setText('')
+  }
+
+  async function sendMacro() {
+    if (!macro) {
+      return
+    }
+
+    await sendMessage(macro)
+    setText('')
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      if (macro) {
+        sendMacro()
+      } else {
+        send()
+      }
+    }
+  }
 
   return (
     <div className={classNames(classes.root, classNameProp)}>
       <Scrollbars universal>
         <List className={classes.history}>
-          {messages.map((c) => (
-            <ListItem key={c._id}>
-              <ListItemText
-                primary={c.message}
-                secondary={new Date(c.timestamp).toLocaleTimeString()}
-              />
-            </ListItem>
+          {messages.map((msg) => (
+            <ChatMessage key={msg._id} message={msg} />
           ))}
         </List>
       </Scrollbars>
       <TextField
         id="message"
         className={classes.message}
+        onKeyDown={handleKeyDown}
         label="Message"
         multiline
         rows={4}
@@ -60,14 +93,28 @@ function ChatLog({ className: classNameProp }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <Button
-        className={classes.sendButton}
-        onClick={() => sendMessage(text)}
-        color="primary"
-        variant="contained"
-      >
-        Send
-      </Button>
+      <div className={classes.buttonGroup}>
+        <Button
+          className={classes.sendButton}
+          disabled={!text}
+          onClick={send}
+          color={!macro ? 'primary' : undefined}
+          variant={!macro ? 'contained' : undefined}
+        >
+          Send
+        </Button>
+        <Grow in={!!macro}>
+          <Button
+            className={classes.sendButton}
+            disabled={!text}
+            onClick={sendMacro}
+            color="primary"
+            variant="contained"
+          >
+            {macro?.macro.replace('_', ' ') || 'send macro'}
+          </Button>
+        </Grow>
+      </div>
     </div>
   )
 }
