@@ -12,7 +12,7 @@ function putChatMessage(message, { user }) {
     return message
   }
 
-  if (message._ref) {
+  if (message._rev) {
     throw new BadRequestError('Chat is readonly')
   }
 
