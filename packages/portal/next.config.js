@@ -1,6 +1,14 @@
+const withPlugins = require('next-compose-plugins')
 const withTM = require('next-transpile-modules')(['@opentabletop/client'])
+const withImages = require('next-images')
 
-module.exports = withTM({
+module.exports = withPlugins([
+  withTM,
+  [withImages, {
+    esModule: true,
+    inlineImageLimit: 16384,
+  }],
+], {
   publicRuntimeConfig: {
     endpoint: 'http://localhost:3000',
     hasuraEndpoint: '/api',
