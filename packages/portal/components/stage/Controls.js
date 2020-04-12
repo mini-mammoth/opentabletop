@@ -16,14 +16,16 @@ function Controls(props) {
       <Text
         text={text}
         interactive={true}
+        buttonMode={true}
         pointerdown={() => setCounter(counter + 1)}
       />
 
       <Text
         y={50}
-        text={'Show to chat'}
+        text={'Show chat'}
         interactive={true}
-        pointerdown={() => Router.push(`${Router.router.asPath}chat`)}
+        buttonMode={true}
+        pointerdown={() => Router.push(`${Router.router.asPath}/chat`)}
       />
     </Container>
   )

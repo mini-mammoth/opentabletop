@@ -1,11 +1,12 @@
 import { Stage as PixiStage } from '@inlet/react-pixi'
 import { makeStyles } from '@material-ui/core/styles'
+import * as PIXI from 'pixi.js'
 import React, { useEffect, useRef } from 'react'
 import { useMeasure } from 'react-use'
 import { parseHex } from '../utils/parser'
 import Controls from './stage/Controls'
 import GameBoard from './stage/GameBoard'
-import ViewContainer from './stage/ViewContainer'
+import Viewport from './stage/Viewport'
 
 const useStyles = makeStyles(
   () => ({
@@ -26,8 +27,9 @@ const useStyles = makeStyles(
 )
 
 const stageOptions = {
-  backgroundColor: parseHex('#1099bb'),
-  resolution: window.devicePixelRatio,
+  backgroundColor: parseHex('#fff'),
+  resolution: 1, // window.devicePixelRatio,
+  antialias: true,
 }
 
 function Stage() {
@@ -43,16 +45,26 @@ function Stage() {
     app.current?.renderer.resize(width, height)
   }, [width, height])
 
+  const onMount = newApp => {
+    app.current = newApp
+
+    // make PIXI global to the Pixi Inspector plugin can inspect the scene
+    // https://github.com/bfanger/pixi-inspector
+    window.PIXI = PIXI
+  }
+
+  const size = 1000
+
   return (
     <div ref={ref} className={root}>
       <PixiStage
         className={stage}
         options={stageOptions}
-        onMount={(newApp) => (app.current = newApp)}
+        onMount={onMount}
       >
-        <ViewContainer>
-          <GameBoard/>
-        </ViewContainer>
+        <Viewport world={{ width: size, height: size }}>
+          <GameBoard width={size * 2} height={size}/>
+        </Viewport>
         <Controls x={30} y={30}/>
       </PixiStage>
     </div>

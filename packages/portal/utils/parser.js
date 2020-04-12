@@ -1,3 +1,7 @@
 export function parseHex(hexColorString) {
-  return parseInt(hexColorString.replace(/^#/, ''), 16)
+  let hexColor = hexColorString.replace(/^#/, '')
+  if (hexColor.length === 3) {
+    hexColor = hexColor.split('').map(hex => hex + hex).join('')
+  }
+  return parseInt(hexColor, 16)
 }
