@@ -8,13 +8,15 @@ import macros, { executeMacro, removeMacroResults } from './macros'
  * @return {Message}
  */
 function putChatMessage(message, { user }) {
-  if (message.type !== 'Chat') {
+  if (/^urn:ott:chat:/.exec(message._id)) {
     return message
   }
 
   if (message._rev) {
     throw new BadRequestError('Chat is readonly')
   }
+
+  message.type = 'Chat'
 
   // Ensure no one has injected macro results
   message = removeMacroResults(message)
