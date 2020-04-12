@@ -1,4 +1,5 @@
 import getConfig from 'next/config'
+import { serverRules } from '../../../rules'
 import auth0 from '../../../utils/auth0'
 import http from 'http'
 
@@ -26,6 +27,22 @@ export default auth0.requireAuthentication(async function api(req, res) {
   const path = rest.join('/')
   const url = `${endpoint}/game-${gameId}/${path}?${queryString}`
 
+  // Apply all serverRules to the request
+  // Rules only apply for WRITE tasks
+  if (req.body && req.method === 'PUT') {
+    try {
+      for (const rule of serverRules) {
+        req.body = rule(req.body, { user })
+      }
+    } catch (err) {
+      res.status(err.statusCode || 500)
+      res.json(err)
+      res.end()
+      return
+    }
+  }
+
+  // Forward request to couchdb
   return new Promise((resolve, reject) => {
     try {
       const request = http.request(
@@ -34,7 +51,7 @@ export default auth0.requireAuthentication(async function api(req, res) {
           headers: {
             'X-Auth-CouchDB-UserName': user.sub,
             'X-Auth-CouchDB-Roles': 'user',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
           method: req.method,
         },
@@ -50,9 +67,11 @@ export default auth0.requireAuthentication(async function api(req, res) {
       }
 
       request.end()
-    } catch (error) {
-      console.error(error)
-      res.status(500).end()
+    } catch (err) {
+      console.error(err)
+      res.status(err.statusCode || 500)
+      res.json(err)
+      res.end()
       return resolve()
     }
   })
