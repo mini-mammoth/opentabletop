@@ -35,6 +35,21 @@ function ChatLog({ className: classNameProp }) {
   const [text, setText] = useState('')
   const classes = useStyles()
 
+  async function send() {
+    if (!text) {
+      return
+    }
+
+    await sendMessage(text)
+    setText('')
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      send()
+    }
+  }
+
   return (
     <div className={classNames(classes.root, classNameProp)}>
       <Scrollbars universal>
@@ -47,6 +62,7 @@ function ChatLog({ className: classNameProp }) {
       <TextField
         id="message"
         className={classes.message}
+        onKeyDown={handleKeyDown}
         label="Message"
         multiline
         rows={4}
@@ -57,7 +73,8 @@ function ChatLog({ className: classNameProp }) {
       />
       <Button
         className={classes.sendButton}
-        onClick={() => sendMessage(text)}
+        disabled={!text}
+        onClick={send}
         color="primary"
         variant="contained"
       >
