@@ -30,7 +30,7 @@ export default function useChat() {
 
     // Get chat history
     db.find({
-      selector: { type: 'Chat'  },
+      selector: { type: 'Chat' },
     })
       .then(throwIfError)
       .then((lastMessages) => {
@@ -53,14 +53,20 @@ export default function useChat() {
   }, [db])
 
   const sendMessage = useCallback(
-    (text) => {
+    (msg) => {
       if (!db) return
+
+      if (typeof msg === 'string') {
+        msg = {
+          message: msg,
+        }
+      }
 
       const timestamp = Date.now()
       const message = {
+        ...msg,
         _id: `urn:ott:chat:${timestamp}`,
         type: 'Chat',
-        message: text,
         timestamp,
       }
 

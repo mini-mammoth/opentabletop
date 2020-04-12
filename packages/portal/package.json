@@ -17,6 +17,7 @@
     "isomorphic-fetch": "2.2.1",
     "next": "9.3.4",
     "next-transpile-modules": "3.2.0",
+    "node-dice-js": "0.1.2",
     "pixi.js": "5.2.1",
     "pouchdb": "7.2.1",
     "pouchdb-find": "7.2.1",

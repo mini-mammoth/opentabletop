@@ -1,4 +1,5 @@
 import { BadRequestError } from './errors'
+import macros, { executeMacro, removeMacroResults } from './macros'
 
 /**
  * Enforce rules on chat messages
@@ -13,6 +14,14 @@ function putChatMessage(message, { user }) {
 
   if (message._ref) {
     throw new BadRequestError('Chat is readonly')
+  }
+
+  // Ensure no one has injected macro results
+  message = removeMacroResults(message)
+
+  // Execute chat macro if present
+  if (message.macro) {
+    message = executeMacro(message, message.macro)
   }
 
   message.author = {

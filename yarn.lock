@@ -4308,6 +4308,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash@^2.4.1:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
+  integrity sha1-+t2DS5aDBz2hebPq5tnA0VBT9z4=
+
 lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
@@ -4702,6 +4707,13 @@ next@9.3.4:
     watchpack "2.0.0-beta.13"
     webpack "4.42.0"
     webpack-sources "1.4.3"
+
+node-dice-js@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/node-dice-js/-/node-dice-js-0.1.2.tgz#1a8953681a1246bf48b4bcfd5984ba1390f12ba1"
+  integrity sha1-GolTaBoSRr9ItLz9WYS6E5DxK6E=
+  dependencies:
+    lodash "^2.4.1"
 
 node-fetch@2.4.1:
   version "2.4.1"

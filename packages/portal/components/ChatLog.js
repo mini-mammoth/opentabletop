@@ -1,12 +1,14 @@
 import { TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
+import Grow from '@material-ui/core/Grow'
 import List from '@material-ui/core/List'
 import { makeStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 
 import useChat from '../client/useChat'
+import { detectMacro } from '../rules/macros'
 import ChatMessage from './chatLog/ChatMessage'
 
 const useStyles = makeStyles(
@@ -33,7 +35,14 @@ const useStyles = makeStyles(
 function ChatLog({ className: classNameProp }) {
   const [messages, sendMessage] = useChat()
   const [text, setText] = useState('')
+  const [macro, setMacro] = useState(undefined)
   const classes = useStyles()
+
+  useEffect(() => {
+    const macro = detectMacro(text)
+
+    setMacro(macro)
+  }, [text, setMacro])
 
   async function send() {
     if (!text) {
@@ -44,9 +53,22 @@ function ChatLog({ className: classNameProp }) {
     setText('')
   }
 
+  async function sendMacro() {
+    if (!macro) {
+      return
+    }
+
+    await sendMessage(macro)
+    setText('')
+  }
+
   function handleKeyDown(e) {
     if (e.key === 'Enter' && e.ctrlKey) {
-      send()
+      if (macro) {
+        sendMacro()
+      } else {
+        send()
+      }
     }
   }
 
@@ -71,15 +93,28 @@ function ChatLog({ className: classNameProp }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <Button
-        className={classes.sendButton}
-        disabled={!text}
-        onClick={send}
-        color="primary"
-        variant="contained"
-      >
-        Send
-      </Button>
+      <div className={classes.buttonGroup}>
+        <Button
+          className={classes.sendButton}
+          disabled={!text}
+          onClick={send}
+          color={!macro ? 'primary' : undefined}
+          variant={!macro ? 'contained' : undefined}
+        >
+          Send
+        </Button>
+        <Grow in={!!macro}>
+          <Button
+            className={classes.sendButton}
+            disabled={!text}
+            onClick={sendMacro}
+            color="primary"
+            variant="contained"
+          >
+            {macro?.macro.replace('_', ' ') || 'send macro'}
+          </Button>
+        </Grow>
+      </div>
     </div>
   )
 }
