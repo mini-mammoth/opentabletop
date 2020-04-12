@@ -1,13 +1,13 @@
 import { TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
+
 import useChat from '../client/useChat'
+import ChatMessage from './chatLog/ChatMessage'
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -39,13 +39,8 @@ function ChatLog({ className: classNameProp }) {
     <div className={classNames(classes.root, classNameProp)}>
       <Scrollbars universal>
         <List className={classes.history}>
-          {messages.map((c) => (
-            <ListItem key={c._id}>
-              <ListItemText
-                primary={c.message}
-                secondary={new Date(c.timestamp).toLocaleTimeString()}
-              />
-            </ListItem>
+          {messages.map((msg) => (
+            <ChatMessage key={msg._id} message={msg} />
           ))}
         </List>
       </Scrollbars>
