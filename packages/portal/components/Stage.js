@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import * as PIXI from 'pixi.js'
 import React, { useEffect, useRef } from 'react'
 import { useMeasure } from 'react-use'
+
+import map from '../public/assets/demo-map.png'
 import { parseHex } from '../utils/parser'
 import Controls from './stage/Controls'
 import GameBoard from './stage/GameBoard'
@@ -53,7 +55,17 @@ function Stage() {
     window.PIXI = PIXI
   }
 
-  const size = 1000
+  const screen = {
+    width,
+    height,
+  }
+
+  const mapHeight = 1000
+
+  const world = {
+    height: mapHeight,
+    width: mapHeight * 1.4, // TODO should use map ratio
+  }
 
   return (
     <div ref={ref} className={root}>
@@ -62,8 +74,11 @@ function Stage() {
         options={stageOptions}
         onMount={onMount}
       >
-        <Viewport world={{ width: size, height: size }}>
-          <GameBoard width={size * 2} height={size}/>
+        <Viewport mapHeight={mapHeight}
+                  screen={screen}
+                  world={world}>
+          <GameBoard map={map}
+                     mapHeight={mapHeight}/>
         </Viewport>
         <Controls x={30} y={30}/>
       </PixiStage>

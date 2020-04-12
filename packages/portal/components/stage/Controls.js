@@ -12,12 +12,13 @@ function Controls(props) {
   }, [counter])
 
   return (
-    <Container {...props}>
+    <Container {...props} name={'Controls'}>
       <Text
         text={text}
         interactive={true}
         buttonMode={true}
         pointerdown={() => setCounter(counter + 1)}
+        name={'Text Counter'}
       />
 
       <Text
@@ -26,6 +27,7 @@ function Controls(props) {
         interactive={true}
         buttonMode={true}
         pointerdown={() => Router.push(`${Router.router.asPath}/chat`)}
+        name={'Link to Chat'}
       />
     </Container>
   )
