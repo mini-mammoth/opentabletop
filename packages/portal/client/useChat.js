@@ -29,12 +29,16 @@ export default function useChat() {
     }
 
     // Get chat history
-    db.find({
-      selector: { type: 'Chat' },
+    db.allDocs({
+      startkey: 'urn:ott:chat:\ufff0',
+      include_docs: true,
+      descending: true,
+      limit: 20,
     })
       .then(throwIfError)
-      .then((lastMessages) => {
-        setMessages((msgs) => [...lastMessages.docs, ...msgs])
+      .then((res) => {
+        const hist = res.rows.map((row) => row.doc).reverse()
+        setMessages((msgs) => [...hist, ...msgs])
       })
       .catch(console.error)
 
