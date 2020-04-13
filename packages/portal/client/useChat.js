@@ -30,7 +30,7 @@ export default function useChat() {
 
     // Get chat history
     db.allDocs({
-      startkey: 'urn:ott:chat:\ufff0',
+      startkey: 'urn:ott:chat:public:msg:\ufff0',
       include_docs: true,
       descending: true,
       limit: 20,
@@ -69,7 +69,7 @@ export default function useChat() {
       const timestamp = Date.now()
       const message = {
         ...msg,
-        _id: `urn:ott:chat:${timestamp}`,
+        _id: `urn:ott:chat:public:msg:${timestamp}`,
         type: 'Chat',
         timestamp,
       }
