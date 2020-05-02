@@ -6,6 +6,8 @@
   ],
   "scripts": {
     "dev": "yarn workspace @opentabletop/portal dev",
+    "build": "yarn workspace @opentabletop/portal build",
+    "test": "yarn lint",
     "lint": "yarn tsc & yarn eslint .",
     "lint:fix": "yarn eslint . --fix"
   },
