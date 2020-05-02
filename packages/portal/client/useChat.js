@@ -4,11 +4,13 @@ import { throwIfError } from './utils'
 
 /**
  * @typedef ChatMessage
- * @type {object}
- * @property _id {URN} - identifier
- * @property type {'Chat'}
- * @property message {string} -
- * @property timestamp {number} -
+ *
+ * @property {string} _id - identifier
+ * @property {'Chat'} type
+ * @property {string} message - Chat Message
+ * @property {number} timestamp - Unix epoch
+ * @property {object} [author] - Author of the message
+ * @property {string} author.name - Name of the author
  */
 
 /**
@@ -17,7 +19,7 @@ import { throwIfError } from './utils'
  * @example
  *   const [messages, sendMessage] = useChat()
  *
- * @return {[Array<ChatMessage>, Function<String, void>]}
+ * @return {[ChatMessage[], function(string):void]}
  */
 export default function useChat() {
   const db = usePouchDB()

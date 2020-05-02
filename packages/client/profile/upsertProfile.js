@@ -1,10 +1,18 @@
 import nano from 'nano'
 
 /**
+ * @typedef ProfileDocumentExt
+ *
+ * @property {string} name
+ * @property {string} email
+ *
+ * @typedef {DbDocument & ProfileDocumentExt} ProfileDocument
+ */
+
+/**
  * Inserts or updates a users profile.
- * @param user
- * @param endpoint {string} - harusa endpoint
- * @param token {string} - bearer token
+ * @param user {ProfileDocument}
+ * @param options {RequestOptions}
  * @return {Promise<nano.DocumentInsertResponse>}
  */
 async function upsertProfile(user, { endpoint }) {

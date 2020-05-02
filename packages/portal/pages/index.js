@@ -19,8 +19,16 @@ function UserData({ data }) {
 }
 
 function Index() {
-  const { data, error } = useSWR('/api/me', fetcher)
-  const { data: games } = useSWR('/api/games', fetcher)
+  const { data, error } = /** @type {R<{name: string}>} */ (useSWR(
+    '/api/me',
+    fetcher,
+  ))
+
+  const { data: games } = /** @type {R<Game[]>} */ (useSWR(
+    '/api/games',
+    fetcher,
+  ))
+
   const isSignedIn = data && data.name
 
   return (

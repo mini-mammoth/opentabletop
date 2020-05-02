@@ -4,7 +4,7 @@ import shortid from 'shortid'
 /**
  * Creates a new game
  * @param game {Game}
- * @param endpoint
+ * @param options {RequestOptions}
  * @return {Promise<Game>}
  */
 async function createGame(game, { endpoint }) {
@@ -25,6 +25,7 @@ async function createGame(game, { endpoint }) {
 
   // Patch permissions
   // See: https://github.com/apache/couchdb-nano/issues/193
+  // @ts-ignore This is a bug in nano spec
   await nano(endpoint).request({
     db: `game-${game.id}`,
     method: 'put',

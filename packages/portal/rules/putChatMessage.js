@@ -1,11 +1,11 @@
 import { BadRequestError } from './errors'
-import macros, { executeMacro, removeMacroResults } from './macros'
+import { executeMacro, removeMacroResults } from './macros'
 
 /**
  * Enforce rules on chat messages
- * @param message {Message}
- * @param user {Profile}
- * @return {Message}
+ * @param {ChatMessageDocument} message
+ * @param {RuleContext} context
+ * @return {ChatMessageDocument}
  */
 function putChatMessage(message, { user }) {
   if (/^urn:ott:chat:/.exec(message._id)) {

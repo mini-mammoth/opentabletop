@@ -1,6 +1,23 @@
 import Dice from 'node-dice-js'
 import { BadRequestError } from './errors'
 
+/**
+ * @typedef MacroDescription
+ *
+ * @property {string} macro - name of the macro
+ * @property {string} command - params used to execute the macro
+ */
+
+/**
+ * @typedef Macro
+ *
+ * @property {function(string): MacroDescription} tryParse
+ * @property {function(ChatMessageDocument):*} execute
+ */
+
+/**
+ * @type {Object<string, Macro>}
+ */
 const macros = {
   role_dice: {
     tryParse(text) {
@@ -20,9 +37,9 @@ const macros = {
 
 /**
  * Executes a macro against this message
- * @param message {Message}
- * @param macroName {string} - name of the macro to execute
- * @return {Message}
+ * @param {ChatMessageDocument} message
+ * @param {string} macroName - name of the macro to execute
+ * @return {ChatMessageDocument}
  */
 export function executeMacro(message, macroName) {
   const macro = macros[macroName]
@@ -38,8 +55,8 @@ export function executeMacro(message, macroName) {
 
 /**
  * Removes all "injected" macro results of a message.
- * @param message
- * @return {*}
+ * @param {ChatMessageDocument} message
+ * @return {ChatMessageDocument}
  */
 export function removeMacroResults(message) {
   for (const key in macros) {
@@ -57,7 +74,7 @@ export function removeMacroResults(message) {
  * Checks if text can be uses as a macro.
  *
  * Returns undefined if no macro is found.
- * @param text {string}
+ * @param {string} text
  * @return {{macro: string, command: *}|undefined}
  */
 export function detectMacro(text) {

@@ -1,8 +1,8 @@
 /**
  * @typedef Profile
- * @type {object}
- * @property id {string} - id of the user
- * @property name {string} - name of the user
- * @property email {string} - email of the user
- * @property games {Array<Game>} - list of all games
+ *
+ * @property {string} id - id of the user
+ * @property {string} name - name of the user
+ * @property {string} email - email of the user
+ * @property {Game[]} games - list of all games
  */

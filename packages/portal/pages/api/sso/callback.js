@@ -9,12 +9,16 @@ export default async function callback(req, res) {
     await auth0.handleCallback(req, res, { redirectTo: '/' })
 
     // Use this mocked request object to read the session out of the not yet send cookie.
-    const mockReq = { headers: { cookie: res.getHeader('set-cookie') } }
+    const mockReq = /** @type {import('http').IncomingMessage} */ ({
+      headers: { cookie: res.getHeader('set-cookie') },
+    })
+
     const { user } = await auth0.getSession(mockReq)
 
     await upsertProfile(
       {
         _id: user.sub,
+        type: 'Profile',
         name: user.nickname,
         email: user.email,
       },

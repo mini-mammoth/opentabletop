@@ -24,6 +24,7 @@ const useStyles = makeStyles(
     message: {
       margin: theme.spacing(2, 0, 0, 0),
     },
+    buttonGroup: {},
     sendButton: {
       margin: theme.spacing(2, 0),
       alignSelf: 'end',
@@ -32,6 +33,11 @@ const useStyles = makeStyles(
   { name: 'ChatLog' },
 )
 
+/**
+ * Shows the global chat history and a message box to send new messages.
+ * @param {object} props
+ * @param {string} [props.className]
+ */
 function ChatLog({ className: classNameProp }) {
   const [messages, sendMessage] = useChat()
   const [text, setText] = useState('')
