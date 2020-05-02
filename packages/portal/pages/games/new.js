@@ -7,10 +7,16 @@ import React, { useState } from 'react'
 import Layout from '../../components/Layout'
 import { post } from '../../utils/fetcher'
 
+/**
+ *
+ */
 function NewGame() {
   const [name, setName] = useState('')
   const [error, setError] = useState(undefined)
 
+  /**
+   *
+   */
   async function createGame() {
     setError(undefined)
     try {
@@ -21,6 +27,9 @@ function NewGame() {
     }
   }
 
+  /**
+   * @param event
+   */
   function nameChange(event) {
     setName(event.target.value)
   }

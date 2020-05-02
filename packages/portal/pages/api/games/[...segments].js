@@ -10,16 +10,28 @@ const endpoint = serverRuntimeConfig.couchdbEndpoint
  * Forwards all request directly to game database in our couchdb.
  *
  * Acts as authorization proxy and passes the authorized users sub.
+ *
+ * @param {import('next').NextApiRequest} req - Request object
+ * @param {import('next').NextApiResponse} res - Response object
+ * @returns {Promise<*>}
  */
 export default auth0.requireAuthentication(async function api(req, res) {
-  const { user } = await auth0.getSession(req)
+  const session = await auth0.getSession(req)
+  const user = {
+    sub: session.user.sub,
+    nickname: session.user.nickname,
+  }
 
   // The segments object collects all segments after /api/game/
   const { segments, ...other } = req.query
-  const [gameId, ...rest] = segments
+  const [gameId, ...rest] = /** @type{string[]} */ (segments)
 
   const queryString = Object.entries(other)
     .map(([key, value]) => {
+      if (typeof value === 'object') {
+        value = JSON.stringify(value)
+      }
+
       return encodeURIComponent(key) + '=' + encodeURIComponent(value)
     })
     .join('&')

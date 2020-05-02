@@ -2,6 +2,9 @@ import { Container, Text } from '@inlet/react-pixi'
 import Router from 'next/router'
 import React, { useEffect, useState } from 'react'
 
+/**
+ * @param props
+ */
 function Controls(props) {
   const initialText = 'Controls'
   const [text, setState] = useState(initialText)

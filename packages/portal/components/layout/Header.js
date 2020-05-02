@@ -21,6 +21,12 @@ const useStyles = makeStyles(
   { name: 'Header' },
 )
 
+/**
+ * Header including page title and login status
+ *
+ * @param {object} props
+ * @param {string} props.title - Title shown in the AppBar.
+ */
 function Header({ title }) {
   const classes = useStyles()
 

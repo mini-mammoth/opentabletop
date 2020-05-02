@@ -11,8 +11,10 @@ PouchDB.plugin(PouchDBFind)
  * Provides a PouchDB instance for all children.
  *
  * Instance can be received can be accessed with `usePouchDB()`
- * @param children {React.ReactNode}
- * @param remoteUrl {string} - url of the remote database
+ *
+ * @param {object} props - Component's props
+ * @param {React.ReactNode} props.children - Children
+ * @param {string} props.remoteUrl - url of the remote database
  */
 export default function PouchDBProvider({ children, remoteUrl }) {
   const [db, setDB] = useState(undefined)
@@ -22,15 +24,15 @@ export default function PouchDBProvider({ children, remoteUrl }) {
       return
     }
 
-    if (remoteUrl[0] === '/') {
-      remoteUrl = `${window.location.origin}${remoteUrl}`
-    }
+    const targetUrl =
+      remoteUrl[0] === '/' ? `${window.location.origin}${remoteUrl}` : remoteUrl
 
-    const db = new PouchDB(remoteUrl, {
+    const db = new PouchDB(targetUrl, {
       live: true,
     })
 
     if (window) {
+      // @ts-ignore - This is only for debug cases in the browser.
       window.ACTIVE_DB = db
     }
 
@@ -46,7 +48,8 @@ export default function PouchDBProvider({ children, remoteUrl }) {
 
 /**
  * Returns the instance of the PouchDB.
- * @return {PouchDB}
+ *
+ * @returns {PouchDB}
  */
 export function usePouchDB() {
   return useContext(PouchDBContext)

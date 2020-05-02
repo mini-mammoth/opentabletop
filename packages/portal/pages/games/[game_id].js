@@ -21,6 +21,9 @@ const useStyles = makeStyles(
   { name: 'Game' },
 )
 
+/**
+ *
+ */
 function Game() {
   const router = useRouter()
   const { game_id } = router.query

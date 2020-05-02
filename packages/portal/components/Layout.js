@@ -18,6 +18,13 @@ const useStyles = makeStyles(
   { name: 'Layout' },
 )
 
+/**
+ * Layout component used for all
+ *
+ * @param {object} props
+ * @param {string} props.title
+ * @param {React.ReactNode} props.children
+ */
 function Layout({ title, children }) {
   const classes = useStyles()
 

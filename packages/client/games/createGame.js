@@ -3,9 +3,10 @@ import shortid from 'shortid'
 
 /**
  * Creates a new game
- * @param game {Game}
- * @param endpoint
- * @return {Promise<Game>}
+ *
+ * @param {Game} game - The new created game
+ * @param {RequestOptions} options - Additional options used to connect to db
+ * @returns {Promise<Game>}
  */
 async function createGame(game, { endpoint }) {
   const master = nano(endpoint).use('master')
@@ -25,12 +26,15 @@ async function createGame(game, { endpoint }) {
 
   // Patch permissions
   // See: https://github.com/apache/couchdb-nano/issues/193
+  // @ts-ignore This is a bug in nano spec
   await nano(endpoint).request({
-    db: `game-${game.id}`, method: 'put', path: '/_security', body:
-      {
-        admins: { names: [game.gm], roles: ['_admin'] },
-        members: { names: [game.gm, ...game.playerIds], roles: ['_admin'] },
-      },
+    db: `game-${game.id}`,
+    method: 'put',
+    path: '/_security',
+    body: {
+      admins: { names: [game.gm], roles: ['_admin'] },
+      members: { names: [game.gm, ...game.playerIds], roles: ['_admin'] },
+    },
   })
 
   // Upsert game info to all users

@@ -6,6 +6,9 @@ import useSWR from 'swr'
 import Layout from '../components/Layout'
 import fetcher from '../utils/fetcher'
 
+/**
+ *
+ */
 function UserData({ data }) {
   return (
     <ul>
@@ -18,13 +21,24 @@ function UserData({ data }) {
   )
 }
 
+/**
+ *
+ */
 function Index() {
-  const { data, error } = useSWR('/api/me', fetcher)
-  const { data: games } = useSWR('/api/games', fetcher)
+  const { data, error } = /** @type {R<{name: string}>} */ (useSWR(
+    '/api/me',
+    fetcher,
+  ))
+
+  const { data: games } = /** @type {R<Game[]>} */ (useSWR(
+    '/api/games',
+    fetcher,
+  ))
+
   const isSignedIn = data && data.name
 
   return (
-    <Layout title='Welcome'>
+    <Layout title="Welcome">
       <h1>Open Table Top</h1>
 
       {games && (
@@ -32,7 +46,7 @@ function Index() {
           <h3>My Games</h3>
           <ul>
             {games.map((game) => (
-              <li>
+              <li key={game.id}>
                 <Link href={`/games/${game.id}`}>{game.name}</Link>
               </li>
             ))}
