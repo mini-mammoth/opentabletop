@@ -6,7 +6,7 @@ import { throwIfError } from './utils'
  * @typedef ChatMessage
  *
  * @property {string} _id - identifier
- * @property {'Chat'} type
+ * @property {"Chat"} type - This is always "Chat"
  * @property {string} message - Chat Message
  * @property {number} timestamp - Unix epoch
  * @property {object} [author] - Author of the message

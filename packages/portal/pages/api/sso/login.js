@@ -1,8 +1,11 @@
 import auth0 from '../../../utils/auth0'
 
 /**
- * @param req
- * @param res
+ * Starts OAuth2 Authorization flow
+ *
+ * @param {import('next').NextApiRequest} req - Request object
+ * @param {import('next').NextApiResponse} res - Response object
+ * @returns {Promise<*>}
  */
 export default async function login(req, res) {
   try {

@@ -27,6 +27,9 @@ const stageOptions = {
   resolution: window.devicePixelRatio,
 }
 
+/**
+ *
+ */
 function Stage() {
   const { root, stage } = useStyles()
   const [ref, { width, height }] = useMeasure()
@@ -49,6 +52,9 @@ function Stage() {
   )
 }
 
+/**
+ * @param props
+ */
 function SafeStage(props) {
   if (!window) {
     return <div>{'This component only works in the browser'}</div>

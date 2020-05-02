@@ -6,6 +6,13 @@ import auth0 from '../../../utils/auth0'
 const { serverRuntimeConfig } = getConfig()
 const endpoint = serverRuntimeConfig.couchdbEndpoint
 
+/**
+ * Returns all games of a user
+ *
+ * @param {import('next').NextApiRequest} req - Request object
+ * @param {import('next').NextApiResponse} res - Response object
+ * @returns {Promise<*>}
+ */
 export default auth0.requireAuthentication(async function api(req, res) {
   const { user } = await auth0.getSession(req)
 

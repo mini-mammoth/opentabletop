@@ -3,8 +3,10 @@ import nano from 'nano'
 /**
  * @typedef ProfileDocumentExt
  *
- * @property {string} name
- * @property {string} email
+ * Profile document is used to store additional information about a single user.
+ *
+ * @property {string} name - Name of the user
+ * @property {string} email - Email of the user
  *
  * @typedef {DbDocument & ProfileDocumentExt} ProfileDocument
  */
@@ -12,8 +14,8 @@ import nano from 'nano'
 /**
  * Inserts or updates a users profile.
  *
- * @param user {ProfileDocument}
- * @param options {RequestOptions}
+ * @param {ProfileDocument} user - profile to upsert
+ * @param {RequestOptions} options - Additional options to connect to db
  * @returns {Promise<nano.DocumentInsertResponse>}
  */
 async function upsertProfile(user, { endpoint }) {

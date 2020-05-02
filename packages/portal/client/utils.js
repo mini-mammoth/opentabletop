@@ -7,7 +7,7 @@
 
 class TypedError extends Error {
   /**
-   * @param {CouchDBErrorResponse} response
+   * @param {CouchDBErrorResponse} response - CouchDB Response
    */
   constructor(response) {
     super(response.reason)

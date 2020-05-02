@@ -35,6 +35,7 @@ const useStyles = makeStyles(
 
 /**
  * Shows the global chat history and a message box to send new messages.
+ *
  * @param {object} props
  * @param {string} [props.className]
  */
@@ -50,6 +51,9 @@ function ChatLog({ className: classNameProp }) {
     setMacro(macro)
   }, [text, setMacro])
 
+  /**
+   *
+   */
   async function send() {
     if (!text) {
       return
@@ -59,6 +63,9 @@ function ChatLog({ className: classNameProp }) {
     setText('')
   }
 
+  /**
+   *
+   */
   async function sendMacro() {
     if (!macro) {
       return
@@ -68,6 +75,9 @@ function ChatLog({ className: classNameProp }) {
     setText('')
   }
 
+  /**
+   * @param e
+   */
   function handleKeyDown(e) {
     if (e.key === 'Enter' && e.ctrlKey) {
       if (macro) {

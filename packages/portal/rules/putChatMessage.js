@@ -4,8 +4,8 @@ import { executeMacro, removeMacroResults } from './macros'
 /**
  * Enforce rules on chat messages
  *
- * @param {ChatMessageDocument} message
- * @param {RuleContext} context
+ * @param {ChatMessageDocument} message - Message to append to the chat log
+ * @param {RuleContext} context - current session context
  * @returns {ChatMessageDocument}
  */
 function putChatMessage(message, { user }) {

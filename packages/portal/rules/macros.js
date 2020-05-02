@@ -16,7 +16,7 @@ import { BadRequestError } from './errors'
  */
 
 /**
- * @type {Object<string, Macro>}
+ * @type {{[key: string]: Macro}}
  */
 const macros = {
   role_dice: {

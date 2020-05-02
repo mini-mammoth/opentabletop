@@ -5,8 +5,11 @@ import { upsertProfile } from '@opentabletop/client'
 const { serverRuntimeConfig } = getConfig()
 
 /**
- * @param req
- * @param res
+ * Handles OAuth2 callback
+ *
+ * @param {import('next').NextApiRequest} req - Request object
+ * @param {import('next').NextApiResponse} res - Response object
+ * @returns {Promise<*>}
  */
 export default async function callback(req, res) {
   try {

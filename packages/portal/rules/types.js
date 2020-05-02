@@ -1,9 +1,9 @@
 /**
  * @typedef RuleContext
  *
- * @property {object} user
- * @property {string} user.sub
- * @property {string} user.nickname
+ * @property {object} user - currently authenticated user
+ * @property {string} user.sub - id of the user (from IClaims)
+ * @property {string} user.nickname - name of the user (from IClaims)
  */
 
 /**

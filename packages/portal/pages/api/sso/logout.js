@@ -1,8 +1,11 @@
 import auth0 from '../../../utils/auth0'
 
 /**
- * @param req
- * @param res
+ * Deletes all session cookies
+ *
+ * @param {import('next').NextApiRequest} req - Request object
+ * @param {import('next').NextApiResponse} res - Response object
+ * @returns {Promise<*>}
  */
 export default async function logout(req, res) {
   try {

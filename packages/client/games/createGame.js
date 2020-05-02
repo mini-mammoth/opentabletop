@@ -4,8 +4,8 @@ import shortid from 'shortid'
 /**
  * Creates a new game
  *
- * @param {Game} game
- * @param {RequestOptions} options
+ * @param {Game} game - The new created game
+ * @param {RequestOptions} options - Additional options used to connect to db
  * @returns {Promise<Game>}
  */
 async function createGame(game, { endpoint }) {
