@@ -18,7 +18,7 @@
     "next": "9.3.4",
     "next-transpile-modules": "3.2.0",
     "node-dice-js": "0.1.2",
-    "pixi.js": "5.2.1",
+    "pixi.js": "5.2.3",
     "pouchdb": "7.2.1",
     "pouchdb-find": "7.2.1",
     "prop-types": "15.7.2",
