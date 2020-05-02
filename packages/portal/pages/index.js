@@ -24,7 +24,7 @@ function Index() {
   const isSignedIn = data && data.name
 
   return (
-    <Layout title='Welcome'>
+    <Layout title="Welcome">
       <h1>Open Table Top</h1>
 
       {games && (

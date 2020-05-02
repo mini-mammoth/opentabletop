@@ -7,7 +7,7 @@ module.exports = withTM({
   },
   serverRuntimeConfig: {
     couchdbEndpoint: 'http://admin:password@127.0.0.1:5984',
-    auth0Domain: 'opentabletop.eu.auth0.com',
+    auth0Domain: 'auth.vlek.co',
     auth0ClientId: process.env.AUTHO_CLIENT_ID,
     auth0ClientSecret: process.env.AUTH0_CLIENT_SECRET,
     cookieSecret: process.env.COOKIE_SECRET,

@@ -26,11 +26,13 @@ async function createGame(game, { endpoint }) {
   // Patch permissions
   // See: https://github.com/apache/couchdb-nano/issues/193
   await nano(endpoint).request({
-    db: `game-${game.id}`, method: 'put', path: '/_security', body:
-      {
-        admins: { names: [game.gm], roles: ['_admin'] },
-        members: { names: [game.gm, ...game.playerIds], roles: ['_admin'] },
-      },
+    db: `game-${game.id}`,
+    method: 'put',
+    path: '/_security',
+    body: {
+      admins: { names: [game.gm], roles: ['_admin'] },
+      members: { names: [game.gm, ...game.playerIds], roles: ['_admin'] },
+    },
   })
 
   // Upsert game info to all users
