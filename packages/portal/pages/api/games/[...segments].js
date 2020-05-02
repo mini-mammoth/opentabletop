@@ -1,3 +1,4 @@
+import nano from 'nano'
 import getConfig from 'next/config'
 import { serverRules } from '../../../rules'
 import auth0 from '../../../utils/auth0'
@@ -42,9 +43,11 @@ export default auth0.requireAuthentication(async function api(req, res) {
   // Apply all serverRules to the request
   // Rules only apply for WRITE tasks
   if (req.body && req.method === 'PUT') {
+    const db = nano(endpoint).use(`game-${gameId}`)
+
     try {
       for (const rule of serverRules) {
-        req.body = rule(req.body, { user })
+        req.body = await rule(req.body, { user, db })
       }
     } catch (err) {
       res.status(err.statusCode || 500)
@@ -68,6 +71,7 @@ export default auth0.requireAuthentication(async function api(req, res) {
           method: req.method,
         },
         (response) => {
+          // TODO: "READ" permission
           response.pipe(res)
           resolve()
         },

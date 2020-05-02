@@ -9,7 +9,7 @@ import { executeMacro, removeMacroResults } from './macros'
  * @returns {ChatMessageDocument}
  */
 function putChatMessage(message, { user }) {
-  if (/^urn:ott:chat:/.exec(message._id)) {
+  if (!/^urn:ott:chat:/.exec(message._id)) {
     return message
   }
 
