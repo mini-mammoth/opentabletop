@@ -2,11 +2,12 @@ import fetch from 'isomorphic-fetch'
 
 /**
  * Fetch and deserialize json body
+ *
  * @template TRequestBody
  * @template TResponseBody
  * @param {string} url - relative url of the endpoint
  * @param {TRequestBody} data - object you want to post
- * @return {Promise<TResponseBody>}
+ * @returns {Promise<TResponseBody>}
  */
 export async function post(url, data) {
   const res = await fetch(url, {
@@ -25,9 +26,10 @@ export async function post(url, data) {
 
 /**
  * Fetch and deserialize json body
+ *
  * @template TBody
  * @param url {string}
- * @return {Promise<TBody>}
+ * @returns {Promise<TBody>}
  */
 export async function get(url) {
   const res = await fetch(url)

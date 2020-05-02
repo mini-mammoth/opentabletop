@@ -19,7 +19,7 @@ import { throwIfError } from './utils'
  * @example
  *   const [messages, sendMessage] = useChat()
  *
- * @return {[ChatMessage[], function(string):void]}
+ * @returns {[ChatMessage[], function(string):void]}
  */
 export default function useChat() {
   const db = usePouchDB()

@@ -19,9 +19,9 @@
 /**
  * @typedef DbDocument
  *
- * @property {String} _id - id of the document
+ * @property {string} _id - id of the document
  * @property {DbDocumentType} type - type of the document
- * @property {String} [_rev] - revision of this document
+ * @property {string} [_rev] - revision of this document
  */
 
 /**

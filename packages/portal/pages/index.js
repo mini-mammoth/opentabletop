@@ -6,6 +6,9 @@ import useSWR from 'swr'
 import Layout from '../components/Layout'
 import fetcher from '../utils/fetcher'
 
+/**
+ *
+ */
 function UserData({ data }) {
   return (
     <ul>
@@ -18,6 +21,9 @@ function UserData({ data }) {
   )
 }
 
+/**
+ *
+ */
 function Index() {
   const { data, error } = /** @type {R<{name: string}>} */ (useSWR(
     '/api/me',
@@ -40,7 +46,7 @@ function Index() {
           <h3>My Games</h3>
           <ul>
             {games.map((game) => (
-              <li>
+              <li key={game.id}>
                 <Link href={`/games/${game.id}`}>{game.name}</Link>
               </li>
             ))}

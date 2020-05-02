@@ -11,9 +11,10 @@ import nano from 'nano'
 
 /**
  * Inserts or updates a users profile.
+ *
  * @param user {ProfileDocument}
  * @param options {RequestOptions}
- * @return {Promise<nano.DocumentInsertResponse>}
+ * @returns {Promise<nano.DocumentInsertResponse>}
  */
 async function upsertProfile(user, { endpoint }) {
   const master = nano(endpoint).use('master')

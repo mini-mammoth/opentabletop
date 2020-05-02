@@ -2,6 +2,7 @@ import nano from 'nano'
 
 /**
  * Gets all games of a user
+ *
  * @param userId {string} - user identifier
  * @param options {RequestOptions}
  */

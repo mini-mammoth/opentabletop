@@ -4,6 +4,10 @@ import { upsertProfile } from '@opentabletop/client'
 
 const { serverRuntimeConfig } = getConfig()
 
+/**
+ * @param req
+ * @param res
+ */
 export default async function callback(req, res) {
   try {
     await auth0.handleCallback(req, res, { redirectTo: '/' })

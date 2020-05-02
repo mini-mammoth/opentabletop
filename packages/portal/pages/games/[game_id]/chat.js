@@ -5,6 +5,9 @@ import ChatLog from '../../../components/ChatLog'
 import Layout from '../../../components/Layout'
 import PouchDBProvider from '../../../utils/PouchDBContext'
 
+/**
+ *
+ */
 function GameChat() {
   const router = useRouter()
   const { game_id } = router.query

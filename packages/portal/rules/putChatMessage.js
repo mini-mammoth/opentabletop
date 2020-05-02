@@ -3,9 +3,10 @@ import { executeMacro, removeMacroResults } from './macros'
 
 /**
  * Enforce rules on chat messages
+ *
  * @param {ChatMessageDocument} message
  * @param {RuleContext} context
- * @return {ChatMessageDocument}
+ * @returns {ChatMessageDocument}
  */
 function putChatMessage(message, { user }) {
   if (/^urn:ott:chat:/.exec(message._id)) {

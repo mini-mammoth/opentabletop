@@ -25,7 +25,7 @@ class TypedError extends Error {
  *     .then(onlySuccessResponse => {...})
  *     .catch(allErrors => console.error(allErrors))
  * @param {CouchDBErrorResponse} response - CouchDB response
- * @return {*}
+ * @returns {CouchDBErrorResponse}
  */
 export function throwIfError(response) {
   if (response.error) {

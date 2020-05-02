@@ -37,9 +37,10 @@ const macros = {
 
 /**
  * Executes a macro against this message
+ *
  * @param {ChatMessageDocument} message
  * @param {string} macroName - name of the macro to execute
- * @return {ChatMessageDocument}
+ * @returns {ChatMessageDocument}
  */
 export function executeMacro(message, macroName) {
   const macro = macros[macroName]
@@ -55,8 +56,9 @@ export function executeMacro(message, macroName) {
 
 /**
  * Removes all "injected" macro results of a message.
+ *
  * @param {ChatMessageDocument} message
- * @return {ChatMessageDocument}
+ * @returns {ChatMessageDocument}
  */
 export function removeMacroResults(message) {
   for (const key in macros) {
@@ -74,8 +76,9 @@ export function removeMacroResults(message) {
  * Checks if text can be uses as a macro.
  *
  * Returns undefined if no macro is found.
+ *
  * @param {string} text
- * @return {{macro: string, command: *}|undefined}
+ * @returns {{macro: string, command: *}|undefined}
  */
 export function detectMacro(text) {
   for (const macro of Object.values(macros)) {

@@ -3,9 +3,10 @@ import shortid from 'shortid'
 
 /**
  * Creates a new game
- * @param game {Game}
- * @param options {RequestOptions}
- * @return {Promise<Game>}
+ *
+ * @param {Game} game
+ * @param {RequestOptions} options
+ * @returns {Promise<Game>}
  */
 async function createGame(game, { endpoint }) {
   const master = nano(endpoint).use('master')
