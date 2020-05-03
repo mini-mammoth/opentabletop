@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import useTemplates from '../client/useTemplates'
 
@@ -38,9 +38,14 @@ const useStyles = makeStyles(
 function TemplateEditor() {
   const classes = useStyles()
   const [templates, upsertTemplate, deleteTemplate] = useTemplates()
+  const myInput = useRef(null)
   const [selected, select] = useState(
     /** @type{CharacterTemplateDocument} */ ({}),
   )
+
+  const onTemplateJsonSelected = (e) => {
+    console.log(e.target.files)
+  }
 
   useEffect(() => {
     if (!selected._id && templates.length !== 0) {
@@ -101,13 +106,54 @@ function TemplateEditor() {
         >
           DELETE
         </Button>
-        <Button className={classes.button} style={{ marginLeft: 'auto' }}>
-          IMPORT
+        <div style={{ marginLeft: 'auto' }}>
+          <input
+            ref={myInput}
+            type="file"
+            name="file-input"
+            style={{ display: 'none' }}
+            onChange={onTemplateJsonSelected}
+          />
+          <Button
+            className={classes.button}
+            onClick={() => myInput.current.click()}
+          >
+            IMPORT
+          </Button>
+        </div>
+        <Button
+          className={classes.button}
+          onClick={() => downloadTemplatesJson({ templates })}
+        >
+          EXPORT
         </Button>
-        <Button className={classes.button}>EXPORT</Button>
       </div>
     </div>
   )
 }
+
+function downloadTemplatesJson(objectData) {
+  let filename = 'export.json'
+  let contentType = 'application/json;charset=utf-8;'
+  let blob = new Blob(
+    [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
+    { type: contentType },
+  )
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', filename)
+
+  // 3. Append to html page
+  document.body.appendChild(link)
+
+  // 4. Force download
+  link.click()
+
+  // 5. Clean up and remove the link
+  link.parentNode.removeChild(link)
+}
+
+function uploadTemplatesJson() {}
 
 export default TemplateEditor

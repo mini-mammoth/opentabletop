@@ -60,7 +60,7 @@ export default function useCharacterTemplate() {
       return
     }
 
-    // Get chat history
+    // Get templates
     db.allDocs({
       startkey: 'urn:ott:templates:char:',
       endkey: 'urn:ott:templates:char:\ufff0',
