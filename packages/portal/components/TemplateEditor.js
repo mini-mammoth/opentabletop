@@ -26,8 +26,11 @@ const useStyles = makeStyles(
       outline: `2px solid ${theme.palette.primary.main}`,
     },
     editor: { margin: theme.spacing(4, 1, 1, 1) },
-    buttonGroup: { display: 'flex' },
-    button: { margin: theme.spacing(1, 1, 1, 1), flex: 1 },
+    buttonGroup: {
+      display: 'flex',
+      gridColumn: '1 / span 2',
+    },
+    button: { margin: theme.spacing(1, 1, 1, 1), flex: 1, maxWidth: '120px' },
   }),
   { name: 'TemplateEditor' },
 )
@@ -98,6 +101,10 @@ function TemplateEditor() {
         >
           DELETE
         </Button>
+        <Button className={classes.button} style={{ marginLeft: 'auto' }}>
+          IMPORT
+        </Button>
+        <Button className={classes.button}>EXPORT</Button>
       </div>
     </div>
   )
