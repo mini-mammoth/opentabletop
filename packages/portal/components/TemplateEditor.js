@@ -37,14 +37,46 @@ const useStyles = makeStyles(
 
 function TemplateEditor() {
   const classes = useStyles()
-  const [templates, upsertTemplate, deleteTemplate] = useTemplates()
+  const [
+    templates,
+    upsertTemplate,
+    deleteTemplate,
+    importTemplates,
+  ] = useTemplates()
   const myInput = useRef(null)
   const [selected, select] = useState(
     /** @type{CharacterTemplateDocument} */ ({}),
   )
 
-  const onTemplateJsonSelected = (e) => {
-    console.log(e.target.files)
+  const onImportFileSelected = (e) => {
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      let uploadedJSON = JSON.parse(ev.target.result)
+      importTemplates(uploadedJSON['templates'])
+    }
+    reader.readAsText(e.target.files[0])
+  }
+
+  function exportTemplates(objectData) {
+    let filename = 'templates.json'
+    let contentType = 'application/json;charset=utf-8;'
+    let blob = new Blob(
+      [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
+      { type: contentType },
+    )
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', filename)
+
+    // 3. Append to html page
+    document.body.appendChild(link)
+
+    // 4. Force download
+    link.click()
+
+    // 5. Clean up and remove the link
+    link.parentNode.removeChild(link)
   }
 
   useEffect(() => {
@@ -112,7 +144,7 @@ function TemplateEditor() {
             type="file"
             name="file-input"
             style={{ display: 'none' }}
-            onChange={onTemplateJsonSelected}
+            onChange={onImportFileSelected}
           />
           <Button
             className={classes.button}
@@ -123,7 +155,7 @@ function TemplateEditor() {
         </div>
         <Button
           className={classes.button}
-          onClick={() => downloadTemplatesJson({ templates })}
+          onClick={() => exportTemplates({ templates })}
         >
           EXPORT
         </Button>
@@ -131,29 +163,5 @@ function TemplateEditor() {
     </div>
   )
 }
-
-function downloadTemplatesJson(objectData) {
-  let filename = 'export.json'
-  let contentType = 'application/json;charset=utf-8;'
-  let blob = new Blob(
-    [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
-    { type: contentType },
-  )
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.setAttribute('download', filename)
-
-  // 3. Append to html page
-  document.body.appendChild(link)
-
-  // 4. Force download
-  link.click()
-
-  // 5. Clean up and remove the link
-  link.parentNode.removeChild(link)
-}
-
-function uploadTemplatesJson() {}
 
 export default TemplateEditor

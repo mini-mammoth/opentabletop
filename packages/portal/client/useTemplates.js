@@ -49,7 +49,7 @@ function removeById(oldDocs, id) {
 /**
  * Hook to use the templates
  *
- * @returns {[CharacterTemplateDocument[], function(CharacterTemplateDocument|{}):void, function(CharacterTemplateDocument):void]}
+ * @returns {[CharacterTemplateDocument[], function(CharacterTemplateDocument|{}):void, function(CharacterTemplateDocument):void, function(CharacterTemplateDocument[]):void]}
  */
 export default function useCharacterTemplate() {
   const db = usePouchDB()
@@ -122,5 +122,15 @@ export default function useCharacterTemplate() {
     [db],
   )
 
-  return [templates, upsertTemplate, deleteTemplate]
+  const importTemplates = useCallback(
+    (templates) => {
+      if (!db) return
+      for (const template of templates) {
+        upsertTemplate(template)
+      }
+    },
+    [db],
+  )
+
+  return [templates, upsertTemplate, deleteTemplate, importTemplates]
 }
