@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
-    "nano": "^8.2.2",
+    "nano": "^9.0.0",
     "shortid": "^2.2.15"
   }
 }
