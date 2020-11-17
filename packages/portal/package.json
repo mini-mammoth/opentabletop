@@ -27,6 +27,6 @@
     "react-dom": "16.14.0",
     "react-json-view": "1.19.1",
     "react-use": "15.3.4",
-    "swr": "0.3.8"
+    "swr": "0.3.9"
   }
 }
