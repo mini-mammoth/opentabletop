@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import useTemplates from '../client/useTemplates'
 
@@ -26,18 +26,58 @@ const useStyles = makeStyles(
       outline: `2px solid ${theme.palette.primary.main}`,
     },
     editor: { margin: theme.spacing(4, 1, 1, 1) },
-    buttonGroup: { display: 'flex' },
-    button: { margin: theme.spacing(1, 1, 1, 1), flex: 1 },
+    buttonGroup: {
+      display: 'flex',
+      gridColumn: '1 / span 2',
+    },
+    button: { margin: theme.spacing(1, 1, 1, 1), flex: 1, maxWidth: '120px' },
   }),
   { name: 'TemplateEditor' },
 )
 
 function TemplateEditor() {
   const classes = useStyles()
-  const [templates, upsertTemplate, deleteTemplate] = useTemplates()
+  const [
+    templates,
+    upsertTemplate,
+    deleteTemplate,
+    importTemplates,
+  ] = useTemplates()
+  const myInput = useRef(null)
   const [selected, select] = useState(
     /** @type{CharacterTemplateDocument} */ ({}),
   )
+
+  const onImportFileSelected = (e) => {
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      let uploadedJSON = JSON.parse(ev.target.result)
+      importTemplates(uploadedJSON['templates'])
+    }
+    reader.readAsText(e.target.files[0])
+  }
+
+  function exportTemplates(objectData) {
+    let filename = 'templates.json'
+    let contentType = 'application/json;charset=utf-8;'
+    let blob = new Blob(
+      [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
+      { type: contentType },
+    )
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', filename)
+
+    // 3. Append to html page
+    document.body.appendChild(link)
+
+    // 4. Force download
+    link.click()
+
+    // 5. Clean up and remove the link
+    link.parentNode.removeChild(link)
+  }
 
   useEffect(() => {
     if (!selected._id && templates.length !== 0) {
@@ -97,6 +137,27 @@ function TemplateEditor() {
           onClick={() => deleteTemplate(selected)}
         >
           DELETE
+        </Button>
+        <div style={{ marginLeft: 'auto' }}>
+          <input
+            ref={myInput}
+            type="file"
+            name="file-input"
+            style={{ display: 'none' }}
+            onChange={onImportFileSelected}
+          />
+          <Button
+            className={classes.button}
+            onClick={() => myInput.current.click()}
+          >
+            IMPORT
+          </Button>
+        </div>
+        <Button
+          className={classes.button}
+          onClick={() => exportTemplates({ templates })}
+        >
+          EXPORT
         </Button>
       </div>
     </div>
